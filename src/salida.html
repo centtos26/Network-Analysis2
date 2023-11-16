@@ -1,0 +1,164 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 800px;
+                 height: 800px;
+                 background-color: #ffffff;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"DEPARTAMENTO": "Tacna", "EDAD": 36, "FLAG_AN": 0, "FLAG_EPIC007": 1, "FLAG_FFNN": 0, "FLAG_LSB_NP": 0, "FLAG_PEP": 0, "FLAG_ROS": 0, "MONTO_ENTRADA": 161074.44, "MONTO_SALIDA": 193299.26, "TYPE": "PN", "auth_values": 0.0037507025434291223, "avg_neighbor_degree": 5.976190476190476, "betweeness_centrality": 0.03202056753021584, "center_nodes": 0, "closeness_centrality": 0.3194278998722012, "color": "#FF0000", "hubs_values": 0.004925729011696297, "id": "U-f7AGni9q", "in_degree": 36, "in_degree_centrality": 0.02401601067378252, "label": "U-f7AGni9q", "out_degree": 42, "out_degree_centrality": 0.02801867911941294, "periphery": 0, "shape": "star", "size": 55, "title": "Type:PN\nMonto Entrada: 161074.44\nMonto Salida: 193299.26\nDepartamento: Tacna\nAN: 0\nLSB NP: 0\nPEP: 0\nROS: 0"}, {"DEPARTAMENTO": "Arequipa", "EDAD": 54, "FLAG_AN": 0, "FLAG_EPIC007": 0, "FLAG_FFNN": 0, "FLAG_LSB_NP": 0, "FLAG_PEP": 0, "FLAG_ROS": 0, "MONTO_ENTRADA": 14458.77, "MONTO_SALIDA": 6740.77, "TYPE": "PJ", "auth_values": 0.0008402993990018801, "avg_neighbor_degree": 5.8, "betweeness_centrality": 0.0012963048068483436, "center_nodes": 0, "closeness_centrality": 0.26737213538729737, "color": "#4d82e3", "hubs_values": 0.0003490237350786731, "id": "U-F5krE6pp", "in_degree": 7, "in_degree_centrality": 0.00466977985323549, "label": "U-F5krE6pp", "out_degree": 5, "out_degree_centrality": 0.00333555703802535, "periphery": 0, "shape": "box", "size": 30, "title": "Type:PJ\nMonto Entrada: 14458.77\nMonto Salida: 6740.77\nDepartamento: Arequipa\nAN: 0\nLSB NP: 0\nPEP: 0\nROS: 0"}, {"DEPARTAMENTO": "Arequipa", "EDAD": 29, "FLAG_AN": 0, "FLAG_EPIC007": 0, "FLAG_FFNN": 0, "FLAG_LSB_NP": 0, "FLAG_PEP": 0, "FLAG_ROS": 0, "MONTO_ENTRADA": 10352.89, "MONTO_SALIDA": 4467.68, "TYPE": "PJ", "auth_values": 0.0007801419249026699, "avg_neighbor_degree": 5.666666666666667, "betweeness_centrality": 0.0007167304450130018, "center_nodes": 0, "closeness_centrality": 0.2595178174869926, "color": "#4d82e3", "hubs_values": 0.00023582594425690438, "id": "U-HKueMGyA", "in_degree": 5, "in_degree_centrality": 0.00333555703802535, "label": "U-HKueMGyA", "out_degree": 3, "out_degree_centrality": 0.00200133422281521, "periphery": 0, "shape": "box", "size": 30, "title": "Type:PJ\nMonto Entrada: 10352.89\nMonto Salida: 4467.68\nDepartamento: Arequipa\nAN: 0\nLSB NP: 0\nPEP: 0\nROS: 0"}, {"DEPARTAMENTO": "Arequipa", "EDAD": 41, "FLAG_AN": 0, "FLAG_EPIC007": 0, "FLAG_FFNN": 0, "FLAG_LSB_NP": 0, "FLAG_PEP": 0, "FLAG_ROS": 0, "MONTO_ENTRADA": 15490.8, "MONTO_SALIDA": 9725.92, "TYPE": "PN", "auth_values": 0.0011464183826320493, "avg_neighbor_degree": 7.285714285714286, "betweeness_centrality": 0.002231992178374681, "center_nodes": 0, "closeness_centrality": 0.27022733104120694, "color": "#F2FA56", "hubs_values": 0.0005631763639056393, "id": "U-LhWOAA0m", "in_degree": 8, "in_degree_centrality": 0.00533689126084056, "label": "U-LhWOAA0m", "out_degree": 7, "out_degree_centrality": 0.00466977985323549, "periphery": 0, "shape": "triangle", "size": 30, "title": "Type:PN\nMonto Entrada: 15490.8\nMonto Salida: 9725.92\nDepartamento: Arequipa\nAN: 0\nLSB NP: 0\nPEP: 0\nROS: 0"}, {"DEPARTAMENTO": "Arequipa", "EDAD": 46, "FLAG_AN": 0, "FLAG_EPIC007": 0, "FLAG_FFNN": 0, "FLAG_LSB_NP": 0, "FLAG_PEP": 0, "FLAG_ROS": 0, "MONTO_ENTRADA": 19073.2, "MONTO_SALIDA": 6076.38, "TYPE": "PN", "auth_values": 0.0016525942292698332, "avg_neighbor_degree": 5.5, "betweeness_centrality": 0.0016525321627581858, "center_nodes": 0, "closeness_centrality": 0.2925741728400291, "color": "#F2FA56", "hubs_values": 0.0002627308271563171, "id": "U-br9F0xbY", "in_degree": 9, "in_degree_centrality": 0.00600400266844563, "label": "U-br9F0xbY", "out_degree": 4, "out_degree_centrality": 0.00266844563042028, "periphery": 0, "shape": "triangle", "size": 30, "title": "Type:PN\nMonto Entrada: 19073.2\nMonto Salida: 6076.38\nDepartamento: Arequipa\nAN: 0\nLSB NP: 0\nPEP: 0\nROS: 0"}, {"DEPARTAMENTO": "Arequipa", "EDAD": 58, "FLAG_AN": 0, "FLAG_EPIC007": 0, "FLAG_FFNN": 0, "FLAG_LSB_NP": 0, "FLAG_PEP": 0, "FLAG_ROS": 0, "MONTO_ENTRADA": 21753.98, "MONTO_SALIDA": 17273.46, "TYPE": "PN", "auth_values": 0.0016266274470761782, "avg_neighbor_degree": 5.166666666666667, "betweeness_centrality": 0.004694464003238182, "center_nodes": 0, "closeness_centrality": 0.2887825926504194, "color": "#F2FA56", "hubs_values": 0.0009054319813383352, "id": "U-k1S9wnPM", "in_degree": 10, "in_degree_centrality": 0.0066711140760507, "label": "U-k1S9wnPM", "out_degree": 12, "out_degree_centrality": 0.00800533689126084, "periphery": 0, "shape": "triangle", "size": 30, "title": "Type:PN\nMonto Entrada: 21753.98\nMonto Salida: 17273.46\nDepartamento: Arequipa\nAN: 0\nLSB NP: 0\nPEP: 0\nROS: 0"}, {"DEPARTAMENTO": "Arequipa", "EDAD": 31, "FLAG_AN": 0, "FLAG_EPIC007": 0, "FLAG_FFNN": 0, "FLAG_LSB_NP": 0, "FLAG_PEP": 0, "FLAG_ROS": 0, "MONTO_ENTRADA": 16428.54, "MONTO_SALIDA": 9118.27, "TYPE": "PN", "auth_values": 0.0012635924737805296, "avg_neighbor_degree": 7.666666666666667, "betweeness_centrality": 0.001977121758718492, "center_nodes": 0, "closeness_centrality": 0.2811687389835534, "color": "#F2FA56", "hubs_values": 0.000525947010371216, "id": "U-s3gmq5uE", "in_degree": 7, "in_degree_centrality": 0.00466977985323549, "label": "U-s3gmq5uE", "out_degree": 6, "out_degree_centrality": 0.00400266844563042, "periphery": 0, "shape": "triangle", "size": 30, "title": "Type:PN\nMonto Entrada: 16428.54\nMonto Salida: 9118.27\nDepartamento: Arequipa\nAN: 0\nLSB NP: 0\nPEP: 0\nROS: 0"}]);
+                  edges = new vis.DataSet([{"CANAL": "CANAL_3", "CTD_TRX": 1, "MONTO": 4754.52, "TIPO": "TIPO_2", "arrows": "to", "from": "U-f7AGni9q", "title": "MONTO: $4,754.52", "to": "U-F5krE6pp", "value": 4754.52, "width": 1}, {"CANAL": "CANAL_2", "CTD_TRX": 1, "MONTO": 4551.54, "TIPO": "TIPO_1", "arrows": "to", "from": "U-f7AGni9q", "title": "MONTO: $4,551.54", "to": "U-HKueMGyA", "value": 4551.54, "width": 1}, {"CANAL": "CANAL_2", "CTD_TRX": 2, "MONTO": 4545.64, "TIPO": "TIPO_2", "arrows": "to", "from": "U-f7AGni9q", "title": "MONTO: $4,545.64", "to": "U-LhWOAA0m", "value": 4545.64, "width": 1}, {"CANAL": "CANAL_2", "CTD_TRX": 1, "MONTO": 4375.3, "TIPO": "TIPO_2", "arrows": "to", "from": "U-f7AGni9q", "title": "MONTO: $4,375.30", "to": "U-br9F0xbY", "value": 4375.3, "width": 1}, {"CANAL": "CANAL_2", "CTD_TRX": 1, "MONTO": 4328.11, "TIPO": "TIPO_2", "arrows": "to", "from": "U-f7AGni9q", "title": "MONTO: $4,328.11", "to": "U-k1S9wnPM", "value": 4328.11, "width": 1}, {"CANAL": "CANAL_3", "CTD_TRX": 2, "MONTO": 4149.74, "TIPO": "TIPO_2", "arrows": "to", "from": "U-f7AGni9q", "title": "MONTO: $4,149.74", "to": "U-s3gmq5uE", "value": 4149.74, "width": 1}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "forceAtlas2Based": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.01,
+            "damping": 0.4,
+            "gravitationalConstant": -50,
+            "springConstant": 0.08,
+            "springLength": 100
+        },
+        "solver": "forceAtlas2Based",
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    </body>
+</html>
